@@ -54,3 +54,6 @@ dmypy.json
 # その他
 *.bak
 .cache/
+
+# Claude AI設定
+.claude/
