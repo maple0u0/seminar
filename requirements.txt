@@ -1,0 +1,12 @@
+pandas
+xlrd
+numpy
+matplotlib
+japanize-matplotlib
+scipy
+seaborn
+openpyxl
+setuptools
+lightgbm
+scikit-learn
+statsmodels

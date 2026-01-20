@@ -1,0 +1,16 @@
+[flake8]
+# 無視するファイルやディレクトリ
+exclude =
+    .git,
+    __pycache__,
+    .venv,
+    venv,
+    env,
+    .env,
+    functions/load_datasets.py
+
+# 行の最大長（オプション）
+max-line-length = 88
+
+# 無視するエラーコード（オプション）
+# ignore = E501, W503
