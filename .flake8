@@ -10,7 +10,7 @@ exclude =
     functions/load_datasets.py
 
 # 行の最大長（オプション）
-max-line-length = 88
+max-line-length = 200
 
 # 無視するエラーコード（オプション）
 # ignore = E501, W503
