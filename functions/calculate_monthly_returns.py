@@ -25,7 +25,7 @@ def calculate_monthly_returns(df_price):
         next_month = price_cols[i + 1]
 
         returns[f'ret_{next_month}'] = (
-            (df_price[next_month] / df_price[current_month] - 1) * 100
+            (df_price[next_month] / df_price[current_month] - 1)
         )
 
     return returns
