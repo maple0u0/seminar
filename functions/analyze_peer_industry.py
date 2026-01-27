@@ -112,15 +112,6 @@ def analyze_peer_industry_match(
     print(f"\n同業種割合の平均: {result_df['SameIndustryRatio'].mean()*100:.1f}%")
     print("=" * 70)
 
-    # 度数分布表
-    print("\n同業種企業数の度数分布:")
-    print("-" * 40)
-    value_counts = result_df['SameIndustryCount'].value_counts().sort_index()
-    for count, freq in value_counts.items():
-        pct = freq / len(result_df) * 100
-        bar = "#" * int(pct / 2)
-        print(f"  {int(count):2d}社: {freq:4d} ({pct:5.1f}%) {bar}")
-
     # ヒストグラムを描画
     if show_plot:
         _, axes = plt.subplots(1, 2, figsize=(14, 5))

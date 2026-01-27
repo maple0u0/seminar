@@ -169,7 +169,6 @@ def organize_financial_data_by_year(dfs, years=None):
                 .replace("-", np.nan)
                 .apply(pd.to_numeric, errors="coerce")
             )
-            financial_dfs[year] = financial_dfs[year].loc[financial_dfs[year].index]
         else:
             financial_dfs[year] = pd.DataFrame()
 

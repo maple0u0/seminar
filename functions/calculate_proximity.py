@@ -1,4 +1,5 @@
 import lightgbm as lgb
+import matplotlib.pyplot as plt
 import numpy as np
 import pandas as pd
 from scipy.stats import pearsonr
@@ -21,7 +22,7 @@ def calculate_peer_weights(
     y_train = train_df[target]
 
     if len(X_train) < 50:
-        return None
+        return None, None
 
     # =============================
     # 2. LightGBM（近傍探索向け設定）
@@ -103,4 +104,50 @@ def calculate_peer_weights(
         columns=current_features_df.index
     )
 
-    return weights_df
+    # 特徴量重要度を取得
+    importance = pd.Series(
+        model.feature_importance(importance_type="gain"),
+        index=features
+    )
+
+    return weights_df, importance
+
+
+def plot_average_importance(importance_list, figsize=(10, 6)):
+    """
+    複数回の特徴量重要度を平均してヒストグラムを描画する
+
+    Parameters
+    ----------
+    importance_list : list of pd.Series
+        calculate_peer_weights から返された importance のリスト
+    figsize : tuple
+        図のサイズ
+
+    Returns
+    -------
+    pd.Series
+        平均特徴量重要度
+    """
+    # None を除外
+    valid_importance = [imp for imp in importance_list if imp is not None]
+
+    if len(valid_importance) == 0:
+        print("有効な特徴量重要度がありません")
+        return None
+
+    # DataFrameに変換して平均を計算
+    importance_df = pd.DataFrame(valid_importance)
+    avg_importance = importance_df.mean().sort_values(ascending=True)
+
+    # ヒストグラム（横棒グラフ）を描画
+    fig, ax = plt.subplots(figsize=figsize)
+    ax.barh(range(len(avg_importance)), avg_importance.values)
+    ax.set_yticks(range(len(avg_importance)))
+    ax.set_yticklabels(avg_importance.index)
+    ax.set_xlabel("Average Feature Importance (gain)")
+    ax.set_title(f"Feature Importance (averaged over {len(valid_importance)} periods)")
+    plt.tight_layout()
+    plt.show()
+
+    return avg_importance
